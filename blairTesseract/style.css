@@ -1,0 +1,25 @@
+html {
+    background-color: lightblue
+}
+.buttons {
+    text-align: center;
+}
+
+#container {
+    margin: 0px auto;
+	width: 500px;
+	height: 375px;
+    border: 10px #333 solid;
+    text-align: center;
+}
+
+#videoElement {
+	width: 480px;
+	height: 355px;
+    background-color: #666;
+    text-align: center;
+}
+
+#output {
+    text-align: center;
+}

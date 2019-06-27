@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OCR</title>
+    <link rel='stylesheet' href='style.css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src='index.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
+    <script src='ReImg.js'></script>
+    <script src='file.js'></script>
+
+</head>
+
+<body>
+    <pre>
+
+    </pre>
+    <canvas id="canvas">
+    </canvas>
+    
+
+    <div id="container">
+        <video autoplay="true" id="videoElement"></video>
+    </div>
+    <script>
+        
+        var video=document.querySelector("#videoElement");
+        navigator.getUserMedia=navigator.getUserMedia|| navigator.webkitGetUsermedia||navigator.mozGetUserMedia||navigator.msGetUserMedia||navigator.msGetUserMedia||navigator.oGetUserMedia;
+        if(navigator.getUserMedia){
+            navigator.getUserMedia({video:true}, handleVideo, videoError);
+        }
+        function handleVideo(stream){
+            video.srcObject =stream;
+        }
+        function videoError(e){
+
+        }
+    </script>
+    <a id="link"></a>
+    <pre>
+    </pre>
+    <script>
+        function collectFrames(){
+            canvas = document.getElementById("canvas")
+            video = document.getElementById("videoElement")
+            var context = canvas.getContext('2d');
+            var width = 200;
+            var height = 200;
+            context.drawImage(video, 0, 0, width, height);
+            var data = canvas.toDataURL('image/png');
+            canvas.toBlob(function(blob){
+                saveAs(blob, "screenshot.png");
+            },"image/png");
+
+
+
+
+
+
+            //ReImg.fromCanvas(canvas).downloadPng()
+            console.log(data)
+            
+            console.log(Tesseract.recognize(data)).then(function(result){
+               //console.log(result.text);
+            });
+        }
+    </script>
+    <div class="buttons">
+        <button type="button" onClick="collectFrames()" class="btn btn-primary">Read Webcam</button>
+    </div>
+    <pre>
+
+    </pre>
+    <hr>
+    <div style = "text-align:center"> 
+        <textarea rows="4" cols="50" id="output"></textarea>
+    </div>
+</body>
+</html>
